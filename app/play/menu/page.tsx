@@ -69,11 +69,14 @@ export default function PlayMenuPage() {
     try {
       await gameApi.create({
         userId: user.id,
-        topics: [0],
-        difficulty: 0,
+        topics: [1], // Alterado para um tópico válido (Adição)
+        difficulty: 1, // Alterado para uma dificuldade válida
+        questionsIds: [] // Adicionado o campo obrigatório questionsIds
       })
       await loadGames()
-    } catch (e) {}
+    } catch (e) {
+      console.error("Erro ao criar jogo:", e)
+    }
     setCreating(false)
   }
 

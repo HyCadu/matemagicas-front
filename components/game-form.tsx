@@ -7,8 +7,16 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Badge } from "@/components/ui/badge"
 import { X } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
-import { gameApi, type CreateGameRequest, type User, difficultyOptions, topicOptions, questionApi, type Question, type Game, type UpdateGameRequest } from "@/lib/api"
+import { gameApi, type CreateGameRequest, type User, difficultyOptions, getTopicLabel, questionApi, type Question, type Game, type UpdateGameRequest } from "@/lib/api"
 import { Checkbox } from "@/components/ui/checkbox"
+
+// Tópicos corretos para o jogo
+const gameTopicOptions = [
+  { value: 1, label: "Adição" },
+  { value: 2, label: "Subtração" },
+  { value: 3, label: "Multiplicação" },
+  { value: 4, label: "Divisão" },
+]
 
 interface GameFormProps {
   onSuccess: () => void
@@ -20,18 +28,22 @@ export function GameForm({ onSuccess, users, game }: GameFormProps) {
   const [formData, setFormData] = useState({
     userId: game?.userId || "",
     topics: game?.topics || [] as number[],
-    difficulty: game?.difficulty ?? 0,
+    difficulty: game?.difficulty ?? 1,
     questionsIds: game?.questionsIds || [] as string[],
   })
   const [questions, setQuestions] = useState<Question[]>([])
   const [loading, setLoading] = useState(false)
   const { toast } = useToast()
 
-  // Carregar questões ao montar
+  // Carregar questões ativas ao montar
   useEffect(() => {
     async function loadQuestions() {
       try {
-        const response = await questionApi.getAll({ pageSize: 100 })
+        // Carrega apenas questões ativas (status = 1)
+        const response = await questionApi.getAll({ 
+          pageSize: 100,
+          Status: 1
+        })
         setQuestions(response.data.items)
       } catch {
         setQuestions([])
@@ -173,7 +185,7 @@ export function GameForm({ onSuccess, users, game }: GameFormProps) {
       <div>
         <Label className="mb-2 block">Tópicos *</Label>
         <div className="space-y-2">
-          {topicOptions.map((topic) => (
+          {gameTopicOptions.map((topic) => (
             <div key={topic.value} className="flex items-center space-x-2">
               <Checkbox
                 id={`topic-${topic.value}`}
@@ -193,7 +205,7 @@ export function GameForm({ onSuccess, users, game }: GameFormProps) {
         {formData.topics.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-3">
             {formData.topics.map((topicValue) => {
-              const topic = topicOptions.find((t) => t.value === topicValue)
+              const topic = gameTopicOptions.find((t) => t.value === topicValue)
               return (
                 <Badge key={topicValue} variant="secondary" className="flex items-center gap-1">
                   {topic?.label || topicValue}

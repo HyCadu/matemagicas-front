@@ -35,16 +35,20 @@ export default function QuestionsPage() {
   const [selectedQuestion, setSelectedQuestion] = useState<Question | null>(null)
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [isViewOpen, setIsViewOpen] = useState(false)
+  const [showInactive, setShowInactive] = useState(false)
   const { toast } = useToast()
 
   useEffect(() => {
     loadQuestions()
-  }, [])
+  }, [showInactive])
 
   const loadQuestions = async () => {
     try {
       setLoading(true)
-      const response = await questionApi.getAll({ pageSize: 100 })
+      const response = await questionApi.getAll({ 
+        pageSize: 100,
+        Status: showInactive ? undefined : 1 // Filtra apenas ativas se showInactive for false
+      })
 
       if (response.data && Array.isArray(response.data.items)) {
         setQuestions(response.data.items)
@@ -124,25 +128,33 @@ export default function QuestionsPage() {
           <h1 className="text-3xl font-bold text-gray-900">Perguntas</h1>
           <p className="text-gray-600 mt-2">Gerencie as perguntas dos jogos</p>
         </div>
-        <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
-          <DialogTrigger asChild>
-            <Button onClick={handleCreateQuestion}>
-              <Plus className="h-4 w-4 mr-2" />
-              Nova Pergunta
-            </Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-2xl">
-            <DialogHeader>
-              <DialogTitle>{selectedQuestion ? "Editar Pergunta" : "Nova Pergunta"}</DialogTitle>
-              <DialogDescription>
-                {selectedQuestion
-                  ? "Edite as informações da pergunta"
-                  : "Preencha os dados para criar uma nova pergunta"}
-              </DialogDescription>
-            </DialogHeader>
-            <QuestionForm question={selectedQuestion} onSuccess={handleFormSuccess} />
-          </DialogContent>
-        </Dialog>
+        <div className="flex gap-4">
+          <Button
+            variant={showInactive ? "default" : "outline"}
+            onClick={() => setShowInactive(!showInactive)}
+          >
+            {showInactive ? "Ocultar Inativas" : "Mostrar Inativas"}
+          </Button>
+          <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
+            <DialogTrigger asChild>
+              <Button onClick={handleCreateQuestion}>
+                <Plus className="h-4 w-4 mr-2" />
+                Nova Pergunta
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-2xl">
+              <DialogHeader>
+                <DialogTitle>{selectedQuestion ? "Editar Pergunta" : "Nova Pergunta"}</DialogTitle>
+                <DialogDescription>
+                  {selectedQuestion
+                    ? "Edite as informações da pergunta"
+                    : "Preencha os dados para criar uma nova pergunta"}
+                </DialogDescription>
+              </DialogHeader>
+              <QuestionForm question={selectedQuestion} onSuccess={handleFormSuccess} />
+            </DialogContent>
+          </Dialog>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

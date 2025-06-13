@@ -75,6 +75,7 @@ export interface Game {
   incorrectAnswers: number
   questionsIds: string[] | null
   topics: number[]
+  difficulty: number
 }
 
 export interface PagedResult<T> {
@@ -125,12 +126,16 @@ export interface CreateGameRequest {
   userId: string
   topics: number[]
   difficulty: number
+  questionsIds: string[]
 }
 
 export interface UpdateGameRequest {
   score?: number
   correctAnswers?: number
   incorrectAnswers?: number
+  topics?: number[]
+  difficulty?: number
+  questionsIds?: string[]
 }
 
 // API Functions with better error handling

@@ -45,32 +45,32 @@ export default function PlayLoginPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6 md:p-8">
       {/* Título com bandeira */}
       <motion.div
         animate={{ y: [0, -5, 0] }}
         transition={{ duration: 3, repeat: Number.POSITIVE_INFINITY, ease: "easeInOut" }}
-        className="relative mb-8"
+        className="relative mb-4 sm:mb-6 md:mb-8 w-full max-w-[90vw] sm:max-w-md"
       >
         <div className="relative">
-          <div className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 px-16 py-6 rounded-full border-4 border-yellow-600 shadow-2xl">
-            <h1 className="text-4xl md:text-6xl font-bold text-yellow-900 text-center">MATEMÁGICAS</h1>
+          <div className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 px-4 sm:px-8 md:px-16 py-4 sm:py-6 rounded-full border-2 sm:border-4 border-yellow-600 shadow-xl">
+            <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold text-yellow-900 text-center">MATEMÁGICAS</h1>
           </div>
         </div>
       </motion.div>
 
       {/* Card de Login */}
-      <Card className="p-8 w-full max-w-md bg-yellow-100 rounded-3xl shadow-xl border-4 border-yellow-400">
-        <CardHeader>
-          <CardTitle className="text-3xl font-bold text-yellow-900 text-center mb-6">
+      <Card className="p-4 sm:p-6 md:p-8 w-full max-w-[90vw] sm:max-w-md bg-yellow-100 rounded-2xl sm:rounded-3xl shadow-xl border-2 sm:border-4 border-yellow-400">
+        <CardHeader className="p-2 sm:p-4">
+          <CardTitle className="text-2xl sm:text-3xl font-bold text-yellow-900 text-center mb-4 sm:mb-6">
             Entrar no Jogo
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={onSubmit} className="space-y-6">
+        <CardContent className="p-2 sm:p-4">
+          <form onSubmit={onSubmit} className="space-y-4 sm:space-y-6">
             <div className="space-y-2">
-              <label className="text-yellow-900 font-semibold flex items-center gap-2">
-                <User className="w-5 h-5" />
+              <label className="text-yellow-900 font-semibold flex items-center gap-2 text-sm sm:text-base">
+                <User className="w-4 h-4 sm:w-5 sm:h-5" />
                 Email do jogador
               </label>
               <Input
@@ -78,14 +78,14 @@ export default function PlayLoginPage() {
                 value={loginForm.email}
                 onChange={(e) => setLoginForm({ ...loginForm, email: e.target.value })}
                 placeholder="Digite seu email"
-                className="h-12 text-lg border-2 border-yellow-600 rounded-xl"
+                className="h-10 sm:h-12 text-base sm:text-lg border-2 border-yellow-600 rounded-lg sm:rounded-xl"
                 required
               />
             </div>
 
             <div className="space-y-2">
-              <label className="text-yellow-900 font-semibold flex items-center gap-2">
-                <Lock className="w-5 h-5" />
+              <label className="text-yellow-900 font-semibold flex items-center gap-2 text-sm sm:text-base">
+                <Lock className="w-4 h-4 sm:w-5 sm:h-5" />
                 Senha (opcional)
               </label>
               <div className="relative">
@@ -94,14 +94,14 @@ export default function PlayLoginPage() {
                   value={loginForm.password}
                   onChange={(e) => setLoginForm({ ...loginForm, password: e.target.value })}
                   placeholder="Digite sua senha"
-                  className="h-12 text-lg border-2 border-yellow-600 rounded-xl pr-12"
+                  className="h-10 sm:h-12 text-base sm:text-lg border-2 border-yellow-600 rounded-lg sm:rounded-xl pr-12"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
                   className="absolute right-3 top-1/2 transform -translate-y-1/2 text-yellow-700"
                 >
-                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                  {showPassword ? <EyeOff className="w-4 h-4 sm:w-5 sm:h-5" /> : <Eye className="w-4 h-4 sm:w-5 sm:h-5" />}
                 </button>
               </div>
             </div>
@@ -110,18 +110,18 @@ export default function PlayLoginPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="w-full h-14 bg-gradient-to-b from-green-400 to-green-600 border-4 border-green-700 text-white text-xl font-bold rounded-xl shadow-lg hover:from-green-500 hover:to-green-700"
+              className="w-full h-12 sm:h-14 bg-gradient-to-b from-green-400 to-green-600 border-2 sm:border-4 border-green-700 text-white text-lg sm:text-xl font-bold rounded-lg sm:rounded-xl shadow-lg hover:from-green-500 hover:to-green-700"
               disabled={loading}
             >
               {loading ? "Entrando..." : "🎮 Começar a Jogar!"}
             </motion.button>
           </form>
 
-          <div className="mt-6 flex flex-col items-center">
+          <div className="mt-4 sm:mt-6 flex flex-col items-center">
             <span className="text-xs text-yellow-900 mb-2">Ou</span>
             <Button
               variant="outline"
-              className="border-2 border-purple-400 text-purple-700 hover:bg-purple-100 font-bold rounded-full px-6 py-2"
+              className="border-2 border-purple-400 text-purple-700 hover:bg-purple-100 font-bold rounded-full px-4 sm:px-6 py-2 text-sm sm:text-base"
               onClick={() => router.push("/admin/users")}
             >
               Acessar painel admin
