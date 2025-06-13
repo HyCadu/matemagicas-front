@@ -54,7 +54,7 @@ export default function PlayLoginPage() {
       >
         <div className="relative">
           <div className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-400 px-4 sm:px-8 md:px-16 py-4 sm:py-6 rounded-full border-2 sm:border-4 border-yellow-600 shadow-xl">
-            <h1 className="text-2xl sm:text-4xl md:text-6xl font-bold text-yellow-900 text-center">MATEMÁGICAS</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-yellow-900 text-center break-words">MATEMÁGICAS</h1>
           </div>
         </div>
       </motion.div>
