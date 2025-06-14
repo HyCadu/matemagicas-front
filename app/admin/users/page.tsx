@@ -231,23 +231,6 @@ export default function UsersPage() {
           <p className="text-sm sm:text-base text-gray-600 mt-1 sm:mt-2">Gerencie os usuários da plataforma</p>
         </div>
         <div className="flex flex-wrap gap-2 w-full sm:w-auto">
-          {/* Botão e modal de login */}
-          <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
-            <DialogTrigger asChild>
-              <Button variant="outline" disabled={apiConnected === false} className="w-full sm:w-auto">
-                <LogIn className="h-4 w-4 mr-2" />
-                Login
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="w-[95vw] sm:w-[500px]">
-              <DialogHeader>
-                <DialogTitle>Login de Usuário</DialogTitle>
-                <DialogDescription>Faça login com email e senha</DialogDescription>
-              </DialogHeader>
-              <LoginForm onSuccess={() => setIsLoginOpen(false)} />
-            </DialogContent>
-          </Dialog>
-
           {/* Botão e modal de novo usuário */}
           <Dialog open={isFormOpen} onOpenChange={setIsFormOpen}>
             <DialogTrigger asChild>

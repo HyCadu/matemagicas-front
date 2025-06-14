@@ -91,6 +91,7 @@ export interface CreateUserRequest {
   dateOfBirth: string
   email: string
   password: string
+  role: number
 }
 
 export interface UpdateUserRequest {
@@ -323,16 +324,16 @@ export const testApiConnection = async () => {
 
 // Helper functions for enum conversions
 export const difficultyOptions = [
-  { value: 0, label: "Fácil" },
-  { value: 1, label: "Médio" },
-  { value: 2, label: "Difícil" },
+  { value: 1, label: "Fácil" },
+  { value: 2, label: "Médio" },
+  { value: 3, label: "Difícil" },
 ]
 
 export const topicOptions = [
-  { value: 0, label: "Aritmética" },
-  { value: 1, label: "Álgebra" },
-  { value: 2, label: "Geometria" },
-  { value: 3, label: "Trigonometria" },
+  { value: 1, label: "Adição" },
+  { value: 2, label: "Subtração" },
+  { value: 3, label: "Multiplicação" },
+  { value: 4, label: "Divisão" },
   { value: 4, label: "Estatística" },
 ]
 

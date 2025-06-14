@@ -29,7 +29,6 @@ export default function GamesPage() {
   const [selectedGame, setSelectedGame] = useState<Game | null>(null)
   const [isFormOpen, setIsFormOpen] = useState(false)
   const [isViewOpen, setIsViewOpen] = useState(false)
-  const [isResultOpen, setIsResultOpen] = useState(false)
   const [filters, setFilters] = useState({
     userId: "",
     startDate: "",
@@ -110,14 +109,13 @@ export default function GamesPage() {
     setIsViewOpen(true)
   }
 
-  const handleEditResult = (game: Game) => {
+  const handleEditGame = (game: Game) => {
     setSelectedGame(game)
-    setIsResultOpen(true)
+    setIsFormOpen(true)
   }
 
   const handleFormSuccess = () => {
     setIsFormOpen(false)
-    setIsResultOpen(false)
     loadGames()
   }
 
@@ -194,15 +192,6 @@ export default function GamesPage() {
                 </SelectContent>
               </Select>
             </div>
-            <div>
-              <Label htmlFor="startDate">Data</Label>
-              <Input
-                id="startDate"
-                type="date"
-                value={filters.startDate}
-                onChange={(e) => setFilters({ ...filters, startDate: e.target.value })}
-              />
-            </div>
           </div>
         </CardContent>
       </Card>
@@ -221,7 +210,6 @@ export default function GamesPage() {
                     </div>
                     <div className="flex gap-2 mb-2">
                       <Badge className={status.color}>{status.label}</Badge>
-                      <Badge variant="outline">{getDifficultyLabel((game as any).difficulty)}</Badge>
                     </div>
                     <CardDescription>
                       Tópicos:{" "}
@@ -238,7 +226,7 @@ export default function GamesPage() {
                       <Eye className="h-4 w-4" />
                     </Button>
                     {status.label !== "Finalizada" && (
-                      <Button variant="outline" size="sm" onClick={() => handleEditResult(game)}>
+                      <Button variant="outline" size="sm" onClick={() => handleEditGame(game)}>
                         <Edit className="h-4 w-4" />
                       </Button>
                     )}
@@ -247,10 +235,6 @@ export default function GamesPage() {
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-2 gap-4 text-sm text-gray-600">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    <span>Data: {new Date(game.date).toLocaleDateString("pt-BR")}</span>
-                  </div>
                   {game.score > 0 && (
                     <div className="flex items-center gap-2">
                       <Trophy className="h-4 w-4" />
@@ -288,22 +272,6 @@ export default function GamesPage() {
             <DialogTitle>Detalhes da Partida</DialogTitle>
           </DialogHeader>
           {selectedGame && <GameView game={selectedGame} userName={getUserName(selectedGame.userId)} />}
-        </DialogContent>
-      </Dialog>
-
-      <Dialog open={isResultOpen} onOpenChange={setIsResultOpen}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Salvar Resultado</DialogTitle>
-            <DialogDescription>Atualize o resultado da partida</DialogDescription>
-          </DialogHeader>
-          {selectedGame && (
-            <GameResultForm
-              game={selectedGame}
-              onSuccess={handleFormSuccess}
-              userName={getUserName(selectedGame.userId)}
-            />
-          )}
         </DialogContent>
       </Dialog>
     </div>

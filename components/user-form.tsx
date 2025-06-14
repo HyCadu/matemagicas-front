@@ -6,8 +6,9 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { useToast } from "@/hooks/use-toast"
-import { userApi, type User, type CreateUserRequest, type UpdateUserRequest } from "@/lib/api"
+import { userApi, type User, type CreateUserRequest, type UpdateUserRequest, roleOptions } from "@/lib/api"
 
 interface UserFormProps {
   user?: User | null
@@ -20,6 +21,7 @@ export function UserForm({ user, onSuccess }: UserFormProps) {
     email: user?.email || "",
     dateOfBirth: user?.dateOfBirth ? user.dateOfBirth.split("T")[0] : "",
     password: "",
+    role: user?.role ?? 0, // 0 = Player ; 1 = Administrator
   })
   const [loading, setLoading] = useState(false)
   const { toast } = useToast()
@@ -92,6 +94,7 @@ export function UserForm({ user, onSuccess }: UserFormProps) {
           email: formData.email.trim(),
           dateOfBirth: formData.dateOfBirth,
           password: formData.password,
+          role: formData.role,
         }
 
         console.log("Creating user with data:", createData)
@@ -168,6 +171,22 @@ export function UserForm({ user, onSuccess }: UserFormProps) {
           disabled={loading}
           max={new Date().toISOString().split("T")[0]} // Prevent future dates
         />
+      </div>
+
+      <div>
+        <Label htmlFor="role">Tipo de Usuário *</Label>
+        <Select value={formData.role.toString()} onValueChange={(value) => setFormData({ ...formData, role: Number.parseInt(value) })} disabled={loading}>
+          <SelectTrigger id="role">
+            <SelectValue placeholder="Selecione o tipo de usuário" />
+          </SelectTrigger>
+          <SelectContent>
+            {roleOptions.map((option) => (
+              <SelectItem key={option.value} value={option.value.toString()}>
+                {option.label === "Usuário" ? "Aluno" : option.label === "Administrador" ? "Professor" : option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <div>

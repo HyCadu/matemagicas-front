@@ -19,7 +19,7 @@ import {
   type User,
 } from "@/lib/api"
 
-const topicOptions = [
+const gameTopicOptions = [
   { value: 1, label: "Adição" },
   { value: 2, label: "Subtração" },
   { value: 3, label: "Multiplicação" },
@@ -207,7 +207,7 @@ export function QuestionForm({ question, onSuccess }: QuestionFormProps) {
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            {topicOptions.map((option) => (
+            {gameTopicOptions.map((option) => (
               <SelectItem key={option.value} value={option.value.toString()}>
                 {option.label}
               </SelectItem>

@@ -123,12 +123,12 @@ export default function QuestionsPage() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">Perguntas</h1>
           <p className="text-gray-600 mt-2">Gerencie as perguntas dos jogos</p>
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-4 mt-4 sm:mt-0">
           <Button
             variant={showInactive ? "default" : "outline"}
             onClick={() => setShowInactive(!showInactive)}
@@ -173,7 +173,7 @@ export default function QuestionsPage() {
                   </div>
                   <CardDescription>{question.answerOptions.length} opções de resposta</CardDescription>
                 </div>
-                <div className="flex gap-2 flex-shrink-0">
+                <div className="flex flex-col gap-2 sm:flex-row">
                   <Button variant="outline" size="sm" onClick={() => handleViewQuestion(question)}>
                     <Eye className="h-4 w-4" />
                   </Button>
