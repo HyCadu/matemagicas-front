@@ -20,7 +20,7 @@ export function UserForm({ user, onSuccess }: UserFormProps) {
     name: user?.name || "",
     email: user?.email || "",
     dateOfBirth: user?.dateOfBirth ? user.dateOfBirth.split("T")[0] : "",
-    password: "",
+    password: user?.password || "",
     role: user?.role ?? 0, // 0 = Player ; 1 = Administrator
   })
   const [loading, setLoading] = useState(false)

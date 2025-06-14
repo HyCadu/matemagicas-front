@@ -348,7 +348,7 @@ export default function UsersPage() {
                     <p>Data de Nascimento: {formatDate(user.dateOfBirth)}</p>
                     <p>Pontuação Total: {user.totalScore || 0}</p>
                   </div>
-                  <div className="space-y-1">
+                  <div className="space-y-1 break-words">
                     <p>Partidas Jogadas: {getGameHistoryCount(user.gameHistory)}</p>
                     <p>ID: {user.id || "ID não disponível"}</p>
                   </div>
