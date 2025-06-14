@@ -127,7 +127,6 @@ export interface CreateGameRequest {
   userId: string
   topics: number[]
   difficulty: number
-  questionsIds: string[]
 }
 
 export interface UpdateGameRequest {
@@ -136,7 +135,6 @@ export interface UpdateGameRequest {
   incorrectAnswers?: number
   topics?: number[]
   difficulty?: number
-  questionsIds?: string[]
 }
 
 // API Functions with better error handling

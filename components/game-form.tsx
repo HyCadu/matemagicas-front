@@ -31,7 +31,6 @@ export function GameForm({ onSuccess, users, game }: GameFormProps) {
     userId: game?.userId || "",
     topics: game?.topics || [] as number[],
     difficulty: game?.difficulty ?? 1,
-    questionsIds: game?.questionsIds || [] as string[],
   })
   const [questions, setQuestions] = useState<Question[]>([])  // Lista de questões disponíveis
   const [loading, setLoading] = useState(false)              // Estado de carregamento
@@ -73,15 +72,6 @@ export function GameForm({ onSuccess, users, game }: GameFormProps) {
       })
       return
     }
-    // Garante que haja questões selecionadas apenas das questões FILTRADAS
-    if (formData.questionsIds.length === 0) {
-      toast({
-        title: "Erro",
-        description: "Selecione pelo menos uma questão para o jogo",
-        variant: "destructive",
-      })
-      return
-    }
 
     try {
       setLoading(true)
@@ -91,7 +81,6 @@ export function GameForm({ onSuccess, users, game }: GameFormProps) {
         const updateData: UpdateGameRequest = {
           topics: formData.topics,
           difficulty: formData.difficulty,
-          questionsIds: formData.questionsIds,
         }
         await gameApi.update(game.id, updateData)
 
@@ -104,7 +93,6 @@ export function GameForm({ onSuccess, users, game }: GameFormProps) {
           userId: formData.userId,
           topics: formData.topics,
           difficulty: formData.difficulty,
-          questionsIds: formData.questionsIds,
         }
         await gameApi.create(createData)
 
@@ -137,7 +125,6 @@ export function GameForm({ onSuccess, users, game }: GameFormProps) {
       return {
         ...prev,
         topics: newTopics,
-        questionsIds: [] // Limpa as questões selecionadas
       }
     })
   }
@@ -147,25 +134,7 @@ export function GameForm({ onSuccess, users, game }: GameFormProps) {
     setFormData((prev) => ({
       ...prev,
       difficulty: value,
-      questionsIds: [] // Limpa as questões selecionadas ao mudar a dificuldade
     }))
-  }
-
-  // Função para alternar a seleção de questões
-  const toggleQuestion = (questionId: string) => {
-    setFormData((prev) => {
-      if (prev.questionsIds.includes(questionId)) {
-        return {
-          ...prev,
-          questionsIds: prev.questionsIds.filter((id) => id !== questionId),
-        }
-      } else {
-        return {
-          ...prev,
-          questionsIds: [...prev.questionsIds, questionId],
-        }
-      }
-    })
   }
 
   // Renderização do formulário
@@ -255,16 +224,9 @@ export function GameForm({ onSuccess, users, game }: GameFormProps) {
       <div>
         <Label className="mb-2 block">Questões do Jogo *</Label>
         <div className="space-y-2 max-h-40 overflow-y-auto border rounded p-2 bg-gray-50">
-          {filteredQuestions.map((q) => ( // Renderiza as questões filtradas
-            <div key={q.id} className="flex items-center space-x-2">
-              <Checkbox
-                id={`question-${q.id}`}
-                checked={formData.questionsIds.includes(q.id)}
-                onCheckedChange={() => toggleQuestion(q.id)}
-              />
-              <label htmlFor={`question-${q.id}`} className="text-xs">
-                {q.questionText}
-              </label>
+          {filteredQuestions.map((q) => (
+            <div key={q.id} className="flex items-center space-x-2 p-2 hover:bg-gray-100 rounded">
+              <span className="text-xs">{q.questionText}</span>
             </div>
           ))}
           {filteredQuestions.length === 0 && formData.topics.length > 0 && (
