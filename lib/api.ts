@@ -332,7 +332,7 @@ export const topicOptions = [
   { value: 2, label: "Subtração" },
   { value: 3, label: "Multiplicação" },
   { value: 4, label: "Divisão" },
-  { value: 4, label: "Estatística" },
+
 ]
 
 export const statusOptions = [
@@ -341,8 +341,8 @@ export const statusOptions = [
 ]
 
 export const roleOptions = [
-  { value: 0, label: "Usuário" },
-  { value: 1, label: "Administrador" },
+  { value: 1, label: "Aluno" },
+  { value: 2, label: "Professor" },
 ]
 
 export const getDifficultyLabel = (difficulty: number): string => {
@@ -379,4 +379,13 @@ export const getStatusLabel = (status: number): string => {
 
 export const getRoleLabel = (role: number): string => {
   return roleOptions.find((r) => r.value === role)?.label || "Desconhecido"
+}
+
+// Função utilitária para obter usuário logado do localStorage
+export function getLoggedUser() {
+  if (typeof window !== "undefined") {
+    const user = localStorage.getItem("matemagicas:user")
+    return user ? JSON.parse(user) : null
+  }
+  return null
 }

@@ -160,12 +160,8 @@ export default function PlayGamePage() {
       exit={{ opacity: 0, scale: 0.8 }}
       className="flex flex-col items-center justify-center space-y-8 h-full"
     >
-      {/* Ícone de som */}
-      <div className="absolute top-8 right-8">
-        <GameButton onClick={() => {}} variant="primary" size="medium">
-          <Volume2 className="w-6 h-6" />
-        </GameButton>
-      </div>
+      {/*botão de voltar*/ }
+      <Button className="mt-8 bg-white text-purple-800 font-extrabold text-lg px-8 py-3 rounded-full shadow-lg border-2 border-purple-400 hover:bg-gray-100" onClick={() => router.push("/play/menu")}>Voltar ao menu</Button>
 
       {/* Progresso */}
       <div className="text-white text-xl font-bold">
@@ -182,28 +178,30 @@ export default function PlayGamePage() {
           </Card>
 
           {/* Opções de resposta */}
-          <div className="space-y-4 w-full max-w-md">
-            {currentQuestion.answerOptions.map((option: string, index: number) => (
-              <motion.button
-                key={index}
-                whileHover={{ scale: selectedAnswerIndex === null ? 1.02 : 1 }}
-                whileTap={{ scale: selectedAnswerIndex === null ? 0.98 : 1 }}
-                onClick={() => handleAnswer(index)}
-                disabled={selectedAnswerIndex !== null}
-                className={`w-full h-16 text-3xl font-bold rounded-2xl border-4 transition-all duration-300 ${
-                  selectedAnswerIndex === index
-                    ? isCorrect
-                      ? "bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white"
-                      : "bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white"
-                    : showFeedback && index === currentQuestion.correctAnswerIndex // Mostrar correta se a resposta foi dada
-                      ? "bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white"
-                      : "bg-gradient-to-b from-yellow-300 to-yellow-500 border-yellow-600 text-yellow-900 hover:from-yellow-400 hover:to-yellow-600"
-                }`}
-              >
-                {option}
-              </motion.button>
-            ))}
-          </div>
+          <Card className="p-8 w-full max-w-2xl bg-white/90 backdrop-blur-sm rounded-3xl border-4 border-purple-400 shadow-xl">
+            <CardContent className="space-y-4">
+              {currentQuestion.answerOptions.map((option: string, index: number) => (
+                <motion.button
+                  key={index}
+                  whileHover={{ scale: selectedAnswerIndex === null ? 1.02 : 1 }}
+                  whileTap={{ scale: selectedAnswerIndex === null ? 0.98 : 1 }}
+                  onClick={() => handleAnswer(index)}
+                  disabled={selectedAnswerIndex !== null}
+                  className={`w-full h-16 text-3xl font-bold rounded-2xl border-4 transition-all duration-300 ${
+                    selectedAnswerIndex === index
+                      ? isCorrect
+                        ? "bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white"
+                        : "bg-gradient-to-b from-red-400 to-red-600 border-red-700 text-white"
+                      : showFeedback && index === currentQuestion.correctAnswerIndex
+                        ? "bg-gradient-to-b from-green-400 to-green-600 border-green-700 text-white"
+                        : "bg-gradient-to-b from-yellow-300 to-yellow-500 border-yellow-600 text-yellow-900 hover:from-yellow-400 hover:to-yellow-600"
+                  }`}
+                >
+                  {option}
+                </motion.button>
+              ))}
+            </CardContent>
+          </Card>
 
           {/* Feedback */}
           <AnimatePresence>

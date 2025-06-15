@@ -174,22 +174,6 @@ export function UserForm({ user, onSuccess }: UserFormProps) {
       </div>
 
       <div>
-        <Label htmlFor="role">Tipo de Usuário *</Label>
-        <Select value={formData.role.toString()} onValueChange={(value) => setFormData({ ...formData, role: Number.parseInt(value) })} disabled={loading}>
-          <SelectTrigger id="role">
-            <SelectValue placeholder="Selecione o tipo de usuário" />
-          </SelectTrigger>
-          <SelectContent>
-            {roleOptions.map((option) => (
-              <SelectItem key={option.value} value={option.value.toString()}>
-                {option.label === "Usuário" ? "Aluno" : option.label === "Administrador" ? "Professor" : option.label}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <div>
         <Label htmlFor="password">Senha {user ? "(deixe em branco para manter a atual)" : "*"}</Label>
         <Input
           id="password"
